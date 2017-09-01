@@ -1,0 +1,44 @@
+
+#include <iostream>
+#include <cstdlib>
+#include<algorithm>
+using namespace std;
+
+int finder(int a[],int b[],int n1,int n2,int k){
+	//cout<<n1<<" "<<n2<<" "<<k<<" "<<a[0]<<" "<<b[0]<<endl;
+	if(n1<=0) {return b[k-1];}
+	if(n2<=0) {return a[k-1];}
+	if(k<(n1/2+n2/2+2)){
+    if(a[n1/2]<=b[n2/2])
+        n2=n2/2;
+    else
+      n1=n1/2;
+    return finder(a,b,n1,n2,k);
+	}
+	else{
+    if(a[n1/2]<=b[n2/2]){
+    k=k-(n1/2+1);int temp=n1/2;n1=n1-(n1/2+1);return finder(&a[temp+1],b,n1,n2,k);
+    }
+    else{
+    k=k-(n2/2+1);int temp=n2/2;n2=n2-(n2/2+1);return finder(a,&b[temp+1],n1,n2,k);
+    }
+	}
+}
+
+int main(){
+	int x=15,y=15,k=3;
+   int a[x],b[y];
+   for(int i=0;i<x;i++)
+   	a[i]=rand()%10;
+   for(int i=0;i<y;i++)
+   	b[i]=rand()%10;
+   	sort(a,a+x);sort(b,b+y);
+   for(int i=0;i<x;i++)
+    cout<<a[i]<<" ";
+   	cout<<endl;
+  for(int i=0;i<y;i++)
+  cout<<b[i]<<" "; cout<<endl;
+   for(int i=1;i<=x+y;i++)
+   cout<<finder(a,b,x,y,i)<<" ";
+
+}
